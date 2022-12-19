@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu công tác</title>
+    <!--Phần CSS-->
+    <style>
+      body{
+            font-family: sans-serif;
+            font-size: 16px;
+            color: black;
+        }
+        h1{
+            color: blue;
+            text-align: center;
+            font-size: 30px;
+            text-shadow: 3px 3px 10px black;
+            margin: 5px;
+        }
+        .row{
+            float: left;
+            width: 100%;
+            padding: 5px 0px;
+        }
+        .boxcenter{
+            width: 40%;
+         margin: 0 auto;
+        }
+        .bgboxcenter{
+            float: left;
+            min-height: 200px;
+            border: 3px #666 solid;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 2px 2px 10px blueviolet;
+        }
+        .boxleft{
+            float: left;
+            width: calc(25% - 5%);
+            padding: 6px 0px;
+            margin-left: 5px;
+        }
+        .boxright{
+            float: left;
+            width: 70%;
+            padding: 6px 0px;
+        }
+        .btn{
+            text-align: center;
+        }
+        .button{
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: bold;
+            color: palevioletred;
+            padding: 5px 5px;
+            text-align: center;
+            border-radius: 6px;
+            background-color: p;
+        }
+        .error{
+            margin: 10px 0 0 0;
+            padding: 0;
+            color: red;
+            font-size: 12px;
+            font-style: italic;
+        }
+        input[type='text']{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 3px 0;
+            margin: 0;
+            color: black;
+        }
+        input[type='button']{
+            box-sizing: border-box;
+            border: 2px black solid ;
+            padding: 3px 0;
+            margin: 0;
+            color: black;
+            background-color: rgb(239, 139, 139);
+        }
+        select{
+            width: 100%;
+            padding: 3px 0;
+            margin: 0;
+            color: black;
+        }
+        .ketqua{
+            font-size: 14px;
+            font-style: italic;
+         font-weight: bold; 
+            color: green;
+           border-radius: 70px;
+        }
+    </style>
+</head>
+<!--Phần HTML-->
+<body>
+    <div class="row">
+        <div class ="boxcenter">
+            <div class="bgboxcenter">
+                <div class="row"><h1>PHIẾU CÔNG TÁC</h1></div>
+                <div class="row">
+                    <div class="boxleft">Họ và tên</div>
+                    <div class="boxright"></div>
+                    <input id="hoten" type="text" value="" placeholder="Nhập Họ và tên"><span id="errhoten" class="error"></span>
+                </div>
+            <div class="row">
+                <div class="boxleft">Phái</div>
+                <div class="boxright">
+                    <input type="radio" name="gioitinh" checked="checked">Nam
+                    <input type="radio" name="gioitinh">Nữ
+                </div>
+            </div>
+            <div class="boxleft">CMND</div>
+            <div class="boxright">
+                <input id="CMND" type="text" value="" placeholder="Nhập số CMND"><span id="errcmnd" class="error" ></span>
+                </div>  
+        <div class="row">
+            <div class="boxleft">Bộ phận</div>
+            <div class="boxright">
+                <select name="" id="bophan">
+                  <option value="DT">Phòng đào tạo</option>
+                  <option value="QT">Phòng Quản trị</option>
+                  <option value="TTSH">Trung tâm sát hạch</option>
+                </select>
+            </div>
+    <div class="row">
+        <div class="boxleft">Ngày đi</div>
+        <div class="boxright">
+            <input id="ngaydi" type="text" value="" placeholder="dd/mm/yyyy"><span id="errngaydi" class="error"></span>
+        </div>
+    <div class="row">
+        <div class="boxleft">Số ngày</div>
+        <div class="boxright">
+            <input id="songay" type="text" value="" placeholder="Số ngày"><span id="songay" class="error"></span>
+        </div>
+        </div>
+        <div class="row ketqua"></div>
+                <div class="row button">
+                    <input id="thuchien" class="button" type="button" value="Thực hiện">
+                    <input id="taomoi" class="button" type="button" value="Tạo mới">
+                </div>
+        </div>
+    <!--Phần JS-->
+    <script>
+        var chuoiLoi="(*) Lỗi nhập liệu"
+var errArray=[1,1,1,1];
+        var objcmnd=document.getElementById("CMND");
+        console.log(objcmnd);
+        var objhoTen=document.getElementById("hoten")
+        var objngaydi=document.getElementById("ngaydi")
+        console.log(objngaydi);
+        var objbophan=document.getElementById("bophan")
+        console.log(objbophan);
+        var objngaydi=document.getElementById("songay")
+        console.log(objngaydi);
+        var objketqua=document.getElementById("ketqua")
+        var objthuchien=document.getElementById("thuchien")
+        var objtaomoi=document.getElementById("taomoi")
+        var listbophans = ['Phòng Tài Chính','Phòng Quản trị','Trung tâm sát hạch'];
+        function createbophans(listbophans){
+            var listOptions = listbophans.map(function(item, index){
+                return <option value='${index}'>${item}</option>
+            });
+            var chuoiOptions = listOptions.join('');
+            console.log(chuoiOptions);
+            objbophan.innerHTML = chuoiOptions;
+        }
+        createbophans(listbophans);
+        function tongMang(arr){
+            var tong=0;
+            for (var i = 0; i < arr.length; i++){
+                tong+=arr[i];
+            }
+            return tong;
+        }
+        objcmnd.onblur = function(){
+            if(this.value==''){
+                errArray[0]=1;
+                document.getElementById("errcmnd").innerHTML=chuoiLoi;
+            }else{
+                if(this.value.length==9 || this.value.length==12)
+                {
+                errArray[0]=0;
+                document.getElementById("errcmnd").innerHTML="";}
+                else{
+                errArray[0]=1;
+                document.getElementById("errcmnd").innerHTML=chuoiLoi;
+            }
+            }
+        };
+        objhoTen.onblur=function(){
+            if(this.value==''){
+                errArray[1]=1;
+                document.getElementById("errhoten").innerHTML=chuoiLoi;
+            }else{
+                errArray[1]=0;
+                document.getElementById("errhoten").innerHTML="";
+            }
+        };
+        objngaydi.onblur=function(){
+            var chuoi=this.value;
+            var kt=Date.parse(chuoi);
+            console.log(kt);
+            errArray[2]=0;
+            document.getElementById("errngaydi").innerHTML="";
+            if(kt=='' || isNaN(kt)){
+                errArray[2]=1;
+                console.log(document.getElementById("errngaydi"));
+document.getElementById("errngaydi").innerHTML=chuoiLoi;
+            }
+            else{
+                errArray[2]=0;
+                document.getElementById("errngaydi").innerHTML="";
+            }
+        }
+        objsongay.onblur=function(){
+            var gt=this.value;
+            if(gt=='' || isNaN(gt)){
+                errArray[3]=1;
+                console.log(document.getElementById("errsongay"));
+                document.getElementById("errhocbongsv").innerHTML=chuoiLoi;
+            }
+            else{
+                errArray[3]=0;
+                document.getElementById("errhocbongsv").innerHTML="";
+            }
+        }
+        objthuchien.onclick=function(){
+            if(tongMang(errArray)>0){
+                objketqua.innerHTML="<span style='color:red'>Nhập liệu thất bại >";
+            }else{
+                objketqua.innerHTML=`Nhân viên ${objhoTenSV.value} - Bộ phận ${objbophan.options[objbophan.selectedIndex].text}: ${objngaydi.value}`;
+            }
+        }
+        objtaomoi.onclick=function(){
+            var listtext=document.querySelectorAll(input[type="text"]);
+            listtext.forEach(element => {
+                element.value='';
+            });
+        }
+        </script>
+</body>
+</html>
