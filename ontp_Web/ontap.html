@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        font-family: sans-serif;
+        font-size: 16px;
+        color: blue;
+    }
+    h1{
+        color: red;
+        text-align: center;
+        font-size: 40px;
+        text-shadow: 3px 3px 10px black;
+        margin: 5px;
+    }
+    .row{
+        float: left;
+        width: 100%;
+        padding: 5px 0px;
+    }
+    .boxcenter{
+        width: 40%;
+        margin:  0 auto;
+    }
+    .bgboxcenter{
+        float: left;
+        min-height: 200px;
+        border: 2px #666 solid;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 2px 2px 10px black;
+    }
+    .boxleft{
+        float: left;
+        width: calc(25% - 5px);
+        padding: 6px 0px;
+        margin-left: 5px;
+    }
+    .boxright{
+        float: left;
+        width: 70%;
+        padding: 6px 0px;
+    }
+    .btn{
+        text-align: center;
+    }
+    .button{
+        display: inline-block;
+        margin-right: 10px;
+        font-weight: bold;
+        color: red;
+        padding: 5px 5px;
+    }
+    .error{
+        margin: 10px 0 0 0;
+        padding: 0;
+        color: red;
+        font-size: 12px;
+        font-style: italic;
+    }
+    input[type='text']{
+        width: 290px;
+        padding: 3px 0;
+        margin: 0;
+        color: blue;
+    }
+    select{
+        width: 294px;
+        padding: 3px 0;
+        margin: 0;
+        color: blue;
+    }
+    .ketqua{
+        font-size: 14px;
+        font-style: italic;
+        font-weight: bold;
+        color: green;
+    }
+</style>
+
+<body>
+    <div class="row">
+        <div class="boxcenter">
+            <div class="bgboxcenter">
+                <div class="row"> <h1>THÔNG TIN SINH VIÊN</h1></div>
+                <div class="row">
+                    <div class="boxleft">Mã Sinh viên</div>
+                    <div class="boxright">
+                        <input type="text" id="masv" value=""> <span id="errmasv" class="error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxleft">Họ và tên</div>
+                    <div class="boxright">
+                        <input type="text" id="hotensv" value=""> <span id="errhotensv" class="error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxleft">Phái</div>
+                    <div class="boxright">
+                        <input type="radio" name="gioitinh" checked="checked"> Nam
+                        <input type="radio" name="gioitinh"> Nữ
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxleft">Ngày Sinh</div>
+                    <div class="boxright">
+                        <input type="text" id="ngaysinh" value="" placeholder="dd/mm/yyyy"> <span id="errngaysinh" class="error"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxleft">Khoa</div>
+                    <div class="boxright">
+                        <select name="" id="">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxleft">Học Bổng</div>
+                    <div class="boxright">
+                        <input type="text" id="hocbong" value=""> <span id="errhocbong" class="error"></span>
+                    </div>
+                </div>
+                <div id="ketqua" class="row ketqua"></div>
+                <div class="row btn">
+                    <input id="thuchien" class="button" type="button" value="Thực Hiện">
+                    <input id="taomoi" class="button" type="button" value="Tạo Mới">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var listKhoa = ['Tin Học','Anh Văn','Kinh tế'];
+        var chuoiLoi = "(*) Lỗi nhập liệu";
+        var errArray = [1,1,1,1];
+        var objMaSV = document.getElementById("masv");
+        var objHotenSV = document.getElementById("hotensv");
+        var objNgaySinh = document.getElementById("ngaysinh");
+        var objKhoa = document.querySelector('select');
+        var objHocBong = document.getElementById("hocbong");
+        var objThucHien = document.getElementById("thuchien");
+        var objTaoMoi = document.getElementById("taomoi");
+        var objKetQua = document.getElementById("ketqua");
+        function createKhoa(listKhoa) {
+            var options = listKhoa.map(function(item,index) {
+                return `<option value='${index}'>${item}</option>`;
+            });
+            var chuoiOption = options.join('');
+            objKhoa.innerHTML = chuoiOption;
+        }
+        createKhoa(listKhoa);
+
+        function tongMang(arr) {
+            var tong = 0;
+            for(var i = 0; i < arr.length; i++){
+                tong+=arr[i];
+            }
+            return tong;
+        }
+
+        objMaSV.onblur=function() {
+            if(this.value==''){
+                errArray[0] = 1;
+                document.getElementById("errmasv").innerHTML=chuoiLoi;
+            }else{
+                errArray[0]=0;
+                document.getElementById("errmasv").innerHTML="";
+            }
+        };
+
+        objHotenSV.onblur=function() {
+            if(this.value==''){
+                errArray[1] = 1;
+                document.getElementById("errhotensv").innerHTML=chuoiLoi;
+            }else{
+                errArray[1]=0;
+                document.getElementById("errhotensv").innerHTML="";
+            }
+        };
+        objNgaySinh.onblur = function() {
+            var chuoi = this.value;
+            var kiemtra = Date.parse(chuoi);
+            console.log(kiemtra);
+            if(isNaN(kiemtra)){
+                errArray[2]=1;
+                document.getElementById("errngaysinh").innerHTML=chuoiLoi;
+            }else{
+                errArray[2]=0;
+                document.getElementById("errngaysinh").innerHTML="";
+            }
+        };
+
+        objHocBong.onblur = function() {
+            var gt = this.value;
+            if(gt =='' || isNaN(gt)){
+                errArray[3]=1;
+                document.getElementById("errhocbong").innerHTML=chuoiLoi;
+            }else{
+                errArray[3]=0;
+                document.getElementById("errhocbong").innerHTML="";
+            }
+        };
+
+        objThucHien.onclick = function() {
+            if(tongMang(errArray)>0){
+                objKetQua.innerHTML= "<span style='color:red'>Nhập liệu thất bại </span>";
+            }else{
+                objKetQua.innerHTML=
+                `Sinh Viên: ${objHotenSV.value} - Khoa: ${objKhoa.options[objKhoa.selectedIndex].text} - Học bổng ${objHocBong.value}`;
+            }
+        };
+        objTaoMoi.onclick = function() {
+            // if(tongMang(errArray)>0){
+            //     objKetQua.innerHTML= "<span style='color:red'>Tạo mới thông tin thất bại </span>";
+            // }else{
+            //     objKetQua.innerHTML=
+            //     ` Tạo mới thành công Sinh Viên: ${objHotenSV.value} - Khoa: ${objKhoa.options[objKhoa.selectedIndex].text}`;
+            // }
+            document.getElementById('masv').value = '';
+            document.getElementById("hotensv").value = '';
+            document.getElementById("ngaysinh").value = '';
+            document.getElementById("hocbong").value = '';
+            objKetQua.innerHTML="";
+        };
+    </script>
+</body>
+</html>
